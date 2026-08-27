@@ -1,0 +1,12 @@
+rules_version = '2';
+
+// Weave reaches Firestore only through the Admin SDK on the server, which bypasses
+// these rules entirely. Denying everything here means a leaked web API key cannot
+// be used to read anyone's messages directly from the browser.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

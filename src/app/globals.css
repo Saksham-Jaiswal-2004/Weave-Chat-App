@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Surfaces, darkest to lightest. */
+  --color-ink-950: #0b0c10;
+  --color-ink-900: #101218;
+  --color-ink-850: #161821;
+  --color-ink-800: #1c1f29;
+  --color-ink-750: #232733;
+  --color-ink-700: #2c313f;
+  --color-ink-600: #3a4051;
+
+  /* Text. */
+  --color-mist-50: #f2f4f8;
+  --color-mist-200: #c8cddb;
+  --color-mist-400: #8f97ab;
+  /* Lightened for WCAG AA at body size — #6c7488 measured 3.78:1 on ink-850 and
+     4.00:1 on ink-900, both short of 4.5. Same channel offsets, so the cool grey
+     reads identically; now 4.79:1 and 5.07:1. */
+  --color-mist-500: #7d8599;
+
+  /* Brand. */
+  --color-weave-400: #7c8bff;
+  --color-weave-500: #5b6ef5;
+  --color-weave-600: #4757d8;
+
+  --color-signal-online: #3ba55d;
+  --color-signal-danger: #e05252;
+  /* Read receipts. Deliberately a distinct blue, not the brand indigo — the whole
+     point of the third tick state is that it reads differently at a glance. */
+  --color-signal-read: #4fb6ec;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+
+  --radius-bubble: 1rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-mist-50);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  /* Every scroller in the app is a pane, never the page. A long name or a wide
+     bubble must clip rather than drag the whole document sideways. */
+  overflow-x: hidden;
+}
+
+/* Slim, unobtrusive scrollbars in the message list and sidebar. */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-700) transparent;
+}
+.scroll-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background-color: var(--color-ink-700);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-ink-600);
+}
+
+/* Composer: grows with the text, then scrolls. */
+.composer-input {
+  field-sizing: content;
+}
+
+@keyframes weave-blink {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.typing-dot {
+  animation: weave-blink 1.2s infinite ease-in-out;
+}
+
+@keyframes weave-rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.message-enter {
+  animation: weave-rise 140ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-dot,
+  .message-enter {
+    animation: none;
+  }
+  /* Skeleton shimmer carries no information, so drop it. A spinner is the only
+     sign work is happening, so slow it instead of freezing it into a dead ring. */
+  .animate-pulse {
+    animation: none;
+  }
+  .animate-spin {
+    animation-duration: 1.8s;
+  }
+}

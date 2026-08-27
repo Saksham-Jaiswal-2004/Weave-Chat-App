@@ -1,0 +1,34 @@
+{
+  "name": "weave-chat-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch-path=./src/server --watch-path=./server.js server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "typecheck": "tsc --noEmit",
+    "doctor": "node --env-file-if-exists=.env.local scripts/doctor.mjs",
+    "e2e": "node --env-file-if-exists=.env.local scripts/e2e.mjs",
+    "backfill": "node --env-file-if-exists=.env.local scripts/backfill-directory.mjs",
+    "e2e:ui": "node --env-file-if-exists=.env.local scripts/ui-e2e.mjs"
+  },
+  "dependencies": {
+    "firebase": "^12.18.0",
+    "firebase-admin": "^14.3.0",
+    "next": "^16.3.3",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "ws": "^8.21.3",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.3.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@types/ws": "^8.18.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  }
+}
